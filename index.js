@@ -2,19 +2,16 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require('path');
 const util = require('util');
-//const writeFileAsync = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
-const generateMarkdown = require("./utils/generateMarkdown");
+//not sure what this line does but it seems the generator can work without it:
+//const generateMarkdown = require("./utils/generateMarkdown");
+
 inquirer.prompt([
     {
         type: 'input',
         name: 'title',
         message: 'what is the title of your project?',
-    },
-    {
-        type: 'input',
-        name: 'contents',
-        message: 'What are the sections of your project?',
     },
     {
         type: 'input',
@@ -63,18 +60,36 @@ inquirer.prompt([
         message: 'How can this projet be used?',
     },
 ])
+    // .then(function (responses) {
+    //     for(let i = 0; i < responses.channels; i++) {
+    //         if (responses.license === 0) {
+    //             console.log("You are probably smart");
+    //         }}
+    //     })
     .then((data) => {
         console.log(data);
 
+
         const { title, contents, username, email, description, installation, dependencies, contribute, tests, license, usage } = data;
+        const li = data.license
+        console.log(li);
+        if ( li === "MIT") {
+            console.log("MITTTTTTTT")
+
+
+        }
 
         const mdInput = `
 # ${title}
+[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT
+)
 ## Description:
 ${description}
 <br>
 ## Contents:
-${contents}
+<ul>
+<li>Installation</li>
+</ul>
 <br>
 ## Intallation instructions
 ${installation}
@@ -100,7 +115,10 @@ Additionally, you can contact them via ${email} for any questions or comments.
         fs.writeFile("Readme2.md", mdInput, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
+
+
     })
+
 
 
 
