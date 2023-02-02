@@ -2,20 +2,20 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require('path');
 const util = require('util');
-
 //const writeFileAsync = util.promisify(fs.writeFile);
 
 const generateMarkdown = require("./utils/generateMarkdown");
-
-const questions = () =>
 inquirer.prompt([
-
     {
         type: 'input',
         name: 'title',
         message: 'what is the title of your project?',
     },
-
+    {
+        type: 'input',
+        name: 'contents',
+        message: 'What are the sections of your project?',
+    },
     {
         type: 'input',
         name: 'username',
@@ -26,51 +26,83 @@ inquirer.prompt([
         name: 'email',
         message: 'What is your email?',
     },
-
     {
         type: 'input',
         name: 'description',
         message: 'Describe your project?',
     },
+    {
+        type: 'input',
+        name: 'installation',
+        message: 'What are the installation instructions?',
+    },
+    {
+        type: 'input',
+        name: 'dependecies',
+        message: 'How can we install the dependencies?',
+    },
+    {
+        type: 'input',
+        name: 'contribute',
+        message: 'How can others contribute?',
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'How can the project be tested?',
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'What license does your project use?',
+        choices: ["MIT", "APACHE", "GPL", "BSD", "none"]
+    },
+    {
+        type: 'input',
+        name: 'usage',
+        message: 'How can this projet be used?',
+    },
+])
+    .then((data) => {
+        console.log(data);
 
-    // {
-    //     type: 'input',
-    //     name: 'installation',
-    //     message: 'What are the installation instructions?',
-    // }
-    // {
-    //     type: 'input',
-    //     name: 'dependecies',
-    //     message: 'How can we install the dependencies?',
-    // }
-    // {
-    //     type: 'input',
-    //     name: 'contribute',
-    //     message: 'How can others contribute?',
-    // },
-    // {
-    //     type: 'input',
-    //     name: 'tests',
-    //     message: 'How can it be tested?',
-    // },
-    // {
-    //     type: 'list',
-    //     name: 'license',
-    //     message: 'What license does your project use?',
-    //     choices: ["MIT", "APACHE", "GPL", "BSD","none"]
-    //     },
-    // {
-    //     type: 'input',
-    //     name: 'contents',
-    //     message: 'What are the contents of your project?',
-    // },
-]);
-const generateReadme = (answers) =>
-`<title>${answers.title}</title>
-<h1>${answers.title}</h1>
-Project Details:
+        const { title, contents, username, email, description, installation, dependencies, contribute, tests, license, usage } = data;
+
+        const mdInput = `
+# ${title}
+## Description:
+${description}
 <br>
-<p> Description: ${data.description}</p>`
+## Contents:
+${contents}
+<br>
+## Intallation instructions
+${installation}
+<br>
+## Usage:
+${usage}
+<br>
+## License
+${license}
+<br>
+## How others can contribute:
+${contribute}
+<br>
+## Tests
+${tests}
+<br>
+## Questions
+This project was made by ${username}, please see their GitHub profile [here](https://github.com/${username})
+
+Additionally, you can contact them via ${email} for any questions or comments. 
+`;
+
+        fs.writeFile("Readme2.md", mdInput, (err) =>
+            err ? console.log(err) : console.log('Success!')
+        );
+    })
+
+
 
 // .then((data) => {
 
@@ -84,10 +116,10 @@ Project Details:
 
 // `;
 
-questions()
-.then((answers) = writeFileAsync('ReadmeGen.md', generateReadme(answers)))
-.then(() => console.log('README generated!'))
-.catch((err) => console.error(err))
+// questions()
+// .then((answers) = writeFileAsync('ReadmeGen.md', generateReadme(answers)))
+// .then(() => console.log('README generated!'))
+// .catch((err) => console.error(err))
 
 
 
@@ -125,4 +157,3 @@ questions()
 //     err ? console.log(err) : console.log('Success!')
 // );
 // });
-
