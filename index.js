@@ -68,22 +68,22 @@ inquirer.prompt([
     //     })
     .then((data) => {
         console.log(data);
-        
+
         const { title, contents, username, email, description, installation, dependencies, contribute, tests, license, usage } = data;
 
-        static licenseBadge(license){
+        function licenseBadge(license) {
             const badges = {
-                mit:"[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
-                apache:"[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
-                gpl:"[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)",
-                bsd:"[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)",
+                MIT: "[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+                APACHE: "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+                GPL: "[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)",
+                BSD: "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)",
                 none: ""
             }
             return badges[license]
-        
+
         }
 
-        
+
         // const li = data.license;
         // let x = li
         // console.log(li);
@@ -120,43 +120,38 @@ inquirer.prompt([
 
         const mdInput = `
 # ${title}
+${licenseBadge(data.license)}
 
 ## Description:
-${description}
-<br>
+    ${ description }
 ## Contents:
 <ul>
 <li>[Installation](#installation)</li>
 <li>Installation</li>
 <li>Installation</li>
-<li>Installation</li>
-<li>Installation</li>
-<li>Installation</li>
-
 </ul>
-<br>
+
 ## Intallation instructions:
 ${installation}
-<br>
+
 ## Usage:
 ${usage}
-<br>
+
 ## License
 ${license}
-<br>
+
 ## How others can contribute:
 ${contribute}
-<br>
+
 ## Tests
 ${tests}
-<br>
+
 ## Questions
-<br>
+
 This project was made by ${username}, please see their GitHub profile [here](https://github.com/${username})
 
 Additionally, you can contact them via ${email} for any questions or comments. 
 `;
-
         fs.writeFile("READMESample.md", mdInput, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
