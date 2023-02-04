@@ -35,11 +35,6 @@ inquirer.prompt([
     },
     {
         type: 'input',
-        name: 'dependecies',
-        message: 'How can we install the dependencies?',
-    },
-    {
-        type: 'input',
         name: 'contribute',
         message: 'How can others contribute?',
     },
@@ -69,7 +64,7 @@ inquirer.prompt([
     .then((data) => {
         console.log(data);
 
-        const { title, contents, username, email, description, installation, dependencies, contribute, tests, license, usage } = data;
+        const { title, contents, username, email, description, installation, contribute, tests, license, usage } = data;
 
         function licenseBadge(license) {
             const badges = {
@@ -125,22 +120,27 @@ ${licenseBadge(data.license)}
 ## Description:
     ${ description }
 ## Contents:
-<ul>
-<li>[Installation](#installation)</li>
-<li>Installation</li>
-<li>Installation</li>
-</ul>
 
-## Intallation instructions:
+- [Installation](#installation-instructions)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#how-to-contribute)
+- [Tests](#tests)
+- [Questions](#questions)
+
+
+
+
+## Installation Instructions
 ${installation}
 
-## Usage:
+## Usage
 ${usage}
 
 ## License
 ${license}
 
-## How others can contribute:
+## How to contribute
 ${contribute}
 
 ## Tests
