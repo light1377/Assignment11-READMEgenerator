@@ -52,12 +52,12 @@ inquirer.prompt([
         type: 'list',
         name: 'license',
         message: 'What license does your project use?',
-        choices: ["MIT", "APACHE", "GPL", "BSD", "none"]
+        choices: ["MIT", "APACHE", "GPL", "BSD", "none"],
     },
     {
         type: 'input',
         name: 'usage',
-        message: 'How can this projet be used?',
+        message: 'How can this project be used?',
     },
 ])
     // .then(function (responses) {
@@ -68,30 +68,74 @@ inquirer.prompt([
     //     })
     .then((data) => {
         console.log(data);
-
-
+        
         const { title, contents, username, email, description, installation, dependencies, contribute, tests, license, usage } = data;
-        const li = data.license
-        console.log(li);
-        if ( li === "MIT") {
-            console.log("MITTTTTTTT")
 
-
+        static licenseBadge(license){
+            const badges = {
+                mit:"[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+                apache:"[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+                gpl:"[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)",
+                bsd:"[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)",
+                none: ""
+            }
+            return badges[license]
+        
         }
+
+        
+        // const li = data.license;
+        // let x = li
+        // console.log(li);
+        // if (li === "MIT") {
+        //     console.log("MITTTTTTTT")
+        //     let x = "[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
+        // }
+        // else if (li === "APACHE") {
+        //     console.log("APACHEEE");
+        //     x = "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)"
+        // }
+        // else if (li === "GPL") {
+        //     console.log("GPLLLLL");
+        //     x = "[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)"
+        // }
+        // else if (li === "BSD") {
+        //     console.log("BSDDDDDD");
+        //     x = "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)"
+        // }
+        // else if (li === "none") {
+        //     console.log("no license");
+        // }
+        // console.log(x);
+
+
+
+        // const licenses:
+        // this.MIT = [![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT),
+        // this.APACHE =
+        // this.GPL = 
+        // this.BSD = 
+
+
 
         const mdInput = `
 # ${title}
-[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT
-)
+
 ## Description:
 ${description}
 <br>
 ## Contents:
 <ul>
+<li>[Installation](#installation)</li>
 <li>Installation</li>
+<li>Installation</li>
+<li>Installation</li>
+<li>Installation</li>
+<li>Installation</li>
+
 </ul>
 <br>
-## Intallation instructions
+## Intallation instructions:
 ${installation}
 <br>
 ## Usage:
@@ -107,12 +151,13 @@ ${contribute}
 ${tests}
 <br>
 ## Questions
+<br>
 This project was made by ${username}, please see their GitHub profile [here](https://github.com/${username})
 
 Additionally, you can contact them via ${email} for any questions or comments. 
 `;
 
-        fs.writeFile("Readme2.md", mdInput, (err) =>
+        fs.writeFile("READMESample.md", mdInput, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
 
